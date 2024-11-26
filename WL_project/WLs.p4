@@ -70,49 +70,49 @@ header udp_t {
 
 struct metadata {
 
-    bit<8> feature0; //tot_fwd_pkts
-    bit<8> feature1; //tot_bwd_pkts
-    bit<32> feature2; //totlen_fwd_pkts
-    bit<32> feature3; //totlen_bwd_pkts
-    bit<32> feature4; //fwd_pkt_len_max
-    bit<32> feature5; //fwd_pkt_len_min
-    bit<32> feature6; //fwd_pkt_len_mean
-    bit<32> feature7; //bwd_pkt_len_max
-    bit<32> feature8; //bwd_pkt_len_min
-    bit<32> feature9; //bwd_pkt_len_mean
-    bit<1> feature10; //fin_flag_count
-    bit<1> feature11; //syn_flag_count
-    bit<1> feature12; //rst_flag_count
-    bit<1> feature13; //psh_flag_count
-    bit<1> feature14; //ack_flag_count
-    bit<1> feature15; //urg_flag_count
-    bit<1> feature16; //ece_flag_count
-    bit<32> feature17; //pkt_len_max
-    bit<32> feature18; //pkt_len_min
-    bit<32> feature19; //pkt_len_mean
-    bit<16> feature20; //fwd_header_len
-    bit<16> feature21; //bwd_header_len
-    bit<16> feature22; //fwd_seg_size_min
-    bit<32> feature23; //fwd_act_data_pkts
-    bit<32> feature24; //flow_iat_mean
-    bit<32> feature25; //flow_iat_max
-    bit<32> feature26; //flow_iat_min
-    bit<32> feature27; //fwd_iat_tot
-    bit<32> feature28; //fwd_iat_mean
-    bit<32> feature29; //fwd_iat_max
-    bit<32> feature30; //fwd_iat_min
-    bit<32> feature31; //bwd_iat_tot
-    bit<32> feature32; //bwd_iat_mean
-    bit<32> feature33; //bwd_iat_max
-    bit<32> feature34; //bwd_iat_min
-    bit<16> feature35; //init_fwd_win_byts
-    bit<16> feature36; //init_bwd_win_byts
-    bit<32> feature37; //active_mean
-    bit<32> feature38; //active_max
-    bit<32> feature39; //active_min
-    bit<32> feature40; //idle_mean
-    bit<32> feature41; //idle_max
-    bit<32> feature42; //idle_min
+    bit<8> feature0; 
+    bit<8> feature1; 
+    bit<32> feature2; 
+    bit<32> feature3; 
+    bit<32> feature4; 
+    bit<32> feature5; 
+    bit<32> feature6; 
+    bit<32> feature7; 
+    bit<32> feature8; 
+    bit<32> feature9; 
+    bit<1> feature10; 
+    bit<1> feature11; 
+    bit<1> feature12; 
+    bit<1> feature13; 
+    bit<1> feature14; 
+    bit<1> feature15; 
+    bit<1> feature16; 
+    bit<32> feature17; 
+    bit<32> feature18; 
+    bit<32> feature19; 
+    bit<16> feature20;
+    bit<16> feature21;
+    bit<16> feature22;
+    bit<32> feature23;
+    bit<32> feature24;
+    bit<32> feature25; 
+    bit<32> feature26;
+    bit<32> feature27;
+    bit<32> feature28;
+    bit<32> feature29; 
+    bit<32> feature30;
+    bit<32> feature31; 
+    bit<32> feature32; 
+    bit<32> feature33; 
+    bit<32> feature34; 
+    bit<16> feature35; 
+    bit<16> feature36; 
+    bit<32> feature37; 
+    bit<32> feature38; 
+    bit<32> feature39; 
+    bit<32> feature40; 
+    bit<32> feature41; 
+    bit<32> feature42; 
 
 
     bit<32> flow;
