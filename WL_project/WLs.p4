@@ -1449,8 +1449,7 @@ control MyIngress(inout headers hdr,
 				bit<16> f = f_inout + 1;
 
 
-        //here there is the mapping of the features for the application of the model
-        //it's possible to see that some of the features are multiplied by 1000000, as they care about the time and without that, they will be considered in microseconds.
+        
 	if (f == 0) {
 	    feature0 = meta.feature0;
 	}
@@ -1524,37 +1523,37 @@ control MyIngress(inout headers hdr,
 	    feature23 = meta.feature23;
 	}
 	else if (f == 24) {
-	    feature24 = meta.feature24*1000000;
+	    feature24 = meta.feature24;
 	}
 	else if (f == 25) {
-	    feature25 = meta.feature25*1000000;
+	    feature25 = meta.feature25;
 	}
 	else if (f == 26) {
-	    feature26 = meta.feature26*1000000;
+	    feature26 = meta.feature26;
 	}
 	else if (f == 27) {
-	    feature27 = meta.feature27*1000000;
+	    feature27 = meta.feature27;
 	}
 	else if (f == 28) {
-	    feature28 = meta.feature28*1000000;
+	    feature28 = meta.feature28;
 	}
 	else if (f == 29) {
-	    feature29 = meta.feature29*1000000;
+	    feature29 = meta.feature29;
 	}
 	else if (f == 30) {
-	    feature30 = meta.feature30*1000000;
+	    feature30 = meta.feature30;
 	}
 	else if (f == 31) {
-	    feature31 = meta.feature31*1000000;
+	    feature31 = meta.feature31;
 	}
 	else if (f == 32) {
-	    feature32 = meta.feature32*1000000;
+	    feature32 = meta.feature32;
 	}
 	else if (f == 33) {
-	    feature33 = meta.feature33*1000000;
+	    feature33 = meta.feature33;
 	}
 	else if (f == 34) {
-	    feature34 = meta.feature34*1000000;
+	    feature34 = meta.feature34;
 	}
 	else if (f == 35) {
 	    feature35 = meta.feature35;
@@ -1563,22 +1562,22 @@ control MyIngress(inout headers hdr,
 	    feature36 = meta.feature36;
 	}
 	else if (f == 37) {
-	    feature37 = meta.feature37*1000000;
+	    feature37 = meta.feature37;
 	}
 	else if (f == 38) {
-	    feature38 = meta.feature38*1000000;
+	    feature38 = meta.feature38;
 	}
 	else if (f == 39) {
-	    feature39 = meta.feature39*1000000;
+	    feature39 = meta.feature39;
 	}
 	else if (f == 40) {
-	    feature40 = meta.feature40*1000000;
+	    feature40 = meta.feature40;
 	}
 	else if (f == 41) {
-	    feature41 = meta.feature41*1000000;
+	    feature41 = meta.feature41;
 	}
 	else if (f == 42) {
-	    feature42 = meta.feature42*1000000;
+	    feature42 = meta.feature42;
 	}
 
 
