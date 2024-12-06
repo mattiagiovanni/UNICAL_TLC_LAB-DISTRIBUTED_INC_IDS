@@ -69,50 +69,49 @@ header udp_t {
 
 
 struct metadata {
-
-    bit<8> feature0; 
-    bit<8> feature1; 
-    bit<32> feature2; 
-    bit<32> feature3; 
-    bit<32> feature4; 
-    bit<32> feature5; 
-    bit<32> feature6; 
-    bit<32> feature7; 
-    bit<32> feature8; 
-    bit<32> feature9; 
-    bit<1> feature10; 
-    bit<1> feature11; 
-    bit<1> feature12; 
-    bit<1> feature13; 
-    bit<1> feature14; 
-    bit<1> feature15; 
-    bit<1> feature16; 
-    bit<32> feature17; 
-    bit<32> feature18; 
-    bit<32> feature19; 
-    bit<16> feature20;
-    bit<16> feature21;
-    bit<16> feature22;
-    bit<32> feature23;
-    bit<32> feature24;
-    bit<32> feature25; 
-    bit<32> feature26;
-    bit<32> feature27;
-    bit<32> feature28;
-    bit<32> feature29; 
-    bit<32> feature30;
-    bit<32> feature31; 
-    bit<32> feature32; 
-    bit<32> feature33; 
-    bit<32> feature34; 
-    bit<16> feature35; 
-    bit<16> feature36; 
-    bit<32> feature37; 
-    bit<32> feature38; 
-    bit<32> feature39; 
-    bit<32> feature40; 
-    bit<32> feature41; 
-    bit<32> feature42; 
+	bit<8> feature0; //fin_flag_count      NV
+    bit<8> feature1; //syn_flag_count      NV
+    bit<8> feature2; //rst_flag_count      NV
+    bit<8> feature3; //psh_flag_count      NV
+    bit<8> feature4; //ack_flag_count      NV
+    bit<8> feature5; //urg_flag_count      NV
+    bit<8> feature6; //ece_flag_count      NV
+    bit<8> feature7; //tot_fwd_pkts        NV
+	bit<8> feature8; //tot_bwd_pkts        NV
+    bit<32> feature9; //totlen_fwd_pkts    NV
+    bit<32> feature10; //totlen_bwd_pkts   NV
+    bit<32> feature11; //fwd_pkt_len_min   NV
+	bit<32> feature12; //fwd_pkt_len_max   NV
+    bit<32> feature13; //fwd_pkt_len_mean  NV
+	bit<32> feature14; //bwd_pkt_len_min   NV
+    bit<32> feature15; //bwd_pkt_len_max   NV 
+    bit<32> feature16; //bwd_pkt_len_mean  NV
+    bit<32> feature17; //pkt_len_max	   NV
+    bit<32> feature18; //pkt_len_min       NV
+    bit<32> feature19; //pkt_len_mean      NV
+    bit<16> feature20; //fwd_header_len    NV
+    bit<16> feature21; //fwd_seg_size_min  NV
+    bit<16> feature22; //bwd_header_len    NV
+    bit<16> feature23; //init_fwd_win_byts NV
+    bit<16> feature24; //init_bwd_win_byts NV
+    bit<32> feature25; //fwd_act_data_pkts NV
+	bit<32> feature26; //flow_iat_min      NV
+	bit<32> feature27; //flow_iat_max      NV
+	bit<32> feature28; //flow_iat_mean     NV     
+    bit<32> feature29; //fwd_iat_min       NV
+	bit<32> feature30; //fwd_iat_max       NV
+    bit<32> feature31; //fwd_iat_tot       NV
+    bit<32> feature32; //fwd_iat_mean      NV
+    bit<32> feature33; //bwd_iat_min       NV
+	bit<32> feature34; //bwd_iat_max       NV
+    bit<32> feature35; //bwd_iat_tot       NV
+    bit<32> feature36; //bwd_iat_mean      NV
+    bit<32> feature37; //active_mean       NV
+	bit<32> feature38; //active_min        NV
+    bit<32> feature39; //active_max        NV 
+    bit<32> feature40; //idle_mean         NV
+    bit<32> feature41; //idle_min          NV
+	bit<32> feature42; //idle_max		   NV 
 
 
     bit<32> flow;
@@ -137,13 +136,13 @@ struct metadata {
     bit<8> tot_fwd_pkts;
     bit<8> tot_bwd_pkts;
 
-    bit<1> fin_flag_cnt;
-    bit<1> syn_flag_cnt;
-    bit<1> rst_flag_cnt;
-    bit<1> psh_flag_cnt;
-    bit<1> ack_flag_cnt;
-    bit<1> urg_flag_cnt;
-    bit<1> ece_flag_cnt;
+    bit<8> fin_flag_cnt; //NV
+    bit<8> syn_flag_cnt; //NV
+    bit<8> rst_flag_cnt; //NV
+    bit<8> psh_flag_cnt; //NV
+    bit<8> ack_flag_cnt; //NV
+    bit<8> urg_flag_cnt; //NV
+    bit<8> ece_flag_cnt; //NV
 
     bit<32> len_fwd_pkts;
     bit<32> totlen_fwd_pkts;
@@ -177,30 +176,23 @@ struct metadata {
     bit<32> fwd_iat_mean;
     bit<32> fwd_iat_max;
     bit<32> fwd_iat_min;
-
     bit<32> bwd_iat;
     bit<32> bwd_iat_tot;
     bit<32> bwd_iat_mean;
     bit<32> bwd_iat_max;
     bit<32> bwd_iat_min;
-
-
-
     bit<16> init_fwd_win_byts;
     bit<16> init_bwd_win_byts;
-
     bit<32> active_vals;
     bit<32> active_tot;
     bit<32> active_mean;
     bit<32> active_max;
     bit<32> active_min;
-
     bit<32> idle_vals;
     bit<32> idle_tot;
     bit<32> idle_mean;
     bit<32> idle_max;
     bit<32> idle_min;
-
     bit<16> feature_id;
     bit<16> prevFeature;
     bit<16> isTrue;
@@ -300,13 +292,13 @@ control MyIngress(inout headers hdr,
     register<bit<8>>(MAX_REGISTER_ENTRIES) reg_tot_bwd_pkts;
 
     //the following registers allow to store the packets whose content inglobes the activation of the flags
-    register<bit<1>>(MAX_REGISTER_ENTRIES) reg_fin_flag_cnt;
-    register<bit<1>>(MAX_REGISTER_ENTRIES) reg_syn_flag_cnt;
-    register<bit<1>>(MAX_REGISTER_ENTRIES) reg_rst_flag_cnt;
-    register<bit<1>>(MAX_REGISTER_ENTRIES) reg_psh_flag_cnt;
-    register<bit<1>>(MAX_REGISTER_ENTRIES) reg_ack_flag_cnt;
-    register<bit<1>>(MAX_REGISTER_ENTRIES) reg_urg_flag_cnt;
-    register<bit<1>>(MAX_REGISTER_ENTRIES) reg_ece_flag_cnt;
+    register<bit<8>>(MAX_REGISTER_ENTRIES) reg_fin_flag_cnt; // NV
+    register<bit<8>>(MAX_REGISTER_ENTRIES) reg_syn_flag_cnt; // NV
+    register<bit<8>>(MAX_REGISTER_ENTRIES) reg_rst_flag_cnt; // NV
+    register<bit<8>>(MAX_REGISTER_ENTRIES) reg_psh_flag_cnt; // NV
+    register<bit<8>>(MAX_REGISTER_ENTRIES) reg_ack_flag_cnt; // NV
+    register<bit<8>>(MAX_REGISTER_ENTRIES) reg_urg_flag_cnt; // NV
+    register<bit<8>>(MAX_REGISTER_ENTRIES) reg_ece_flag_cnt; // NV
 
     // the following registers are for the length, its max and minimum values, the mean
     register<bit<32>>(MAX_REGISTER_ENTRIES) reg_len_fwd_pkts;
@@ -462,49 +454,50 @@ control MyIngress(inout headers hdr,
 
     action init_features() {
 	//they will be updated when needed
-    	meta.feature0 = meta.tot_fwd_pkts;
-    	meta.feature1 = meta.tot_bwd_pkts;
-    	meta.feature2 = meta.totlen_fwd_pkts;
-    	meta.feature3 = meta.totlen_bwd_pkts;
-    	meta.feature4 = meta.fwd_pkt_len_max;
-    	meta.feature5 = meta.fwd_pkt_len_min;
-    	meta.feature6 = meta.fwd_pkt_len_mean;
-    	meta.feature7 = meta.bwd_pkt_len_max;
-    	meta.feature8 = meta.bwd_pkt_len_min;
-    	meta.feature9 = meta.bwd_pkt_len_mean;
-    	meta.feature10 = meta.fin_flag_cnt;
-    	meta.feature11 = meta.syn_flag_cnt;
-      meta.feature12 = meta.rst_flag_cnt;
-    	meta.feature13 = meta.psh_flag_cnt;
-    	meta.feature14 = meta.ack_flag_cnt;
-    	meta.feature15 = meta.urg_flag_cnt;
-    	meta.feature16 = meta.ece_flag_cnt;
-    	meta.feature17 = meta.pkt_len_max;
-    	meta.feature18 = meta.pkt_len_min;
-    	meta.feature19 = meta.pkt_len_mean;
-    	meta.feature20 = meta.fwd_header_len;
-    	meta.feature21 = meta.bwd_header_len;
-    	meta.feature22 = meta.fwd_seg_size_min;
-    	meta.feature23 = meta.fwd_act_data_pkts;
-    	meta.feature24 = meta.flow_iat_mean;
-    	meta.feature25 = meta.flow_iat_max;
-    	meta.feature26 = meta.flow_iat_min;
-    	meta.feature27 = meta.fwd_iat_tot;
-    	meta.feature28 = meta.fwd_iat_mean;
-    	meta.feature29 = meta.fwd_iat_max;
-    	meta.feature30 = meta.fwd_iat_min;
-    	meta.feature31 = meta.bwd_iat_tot;
-      meta.feature32 = meta.bwd_iat_mean;
-    	meta.feature33 = meta.bwd_iat_max;
-    	meta.feature34 = meta.bwd_iat_min;
-    	meta.feature35 = meta.init_fwd_win_byts;
-      meta.feature36 = meta.init_bwd_win_byts;
-    	meta.feature37 = meta.active_mean;
-     	meta.feature38 = meta.active_max;
-    	meta.feature39 = meta.active_min;
-    	meta.feature40 = meta.idle_mean;
-      meta.feature41 = meta.idle_max;
-      meta.feature42 = meta.idle_min;
+    	meta.feature0  = meta.fin_flag_cnt;			//NV
+    	meta.feature1  = meta.syn_flag_cnt;			//NV
+      	meta.feature2  = meta.rst_flag_cnt;			//NV
+    	meta.feature3  = meta.psh_flag_cnt;			//NV
+    	meta.feature4  = meta.ack_flag_cnt;			//NV
+    	meta.feature5  = meta.urg_flag_cnt;			//NV
+    	meta.feature6  = meta.ece_flag_cnt;			//NV
+		meta.feature7  = meta.tot_fwd_pkts;			//NV
+		meta.feature8  = meta.tot_bwd_pkts;			//NV
+		meta.feature9  = meta.totlen_fwd_pkts;		//NV
+    	meta.feature10 = meta.totlen_bwd_pkts;		//NV
+		meta.feature11 = meta.fwd_pkt_len_min;		//NV
+    	meta.feature12 = meta.fwd_pkt_len_max;		//NV
+    	meta.feature13 = meta.fwd_pkt_len_mean;		//NV
+    	meta.feature14 = meta.bwd_pkt_len_min;		//NV
+    	meta.feature15 = meta.bwd_pkt_len_max;		//NV
+    	meta.feature16 = meta.bwd_pkt_len_mean;		//NV
+    	meta.feature17 = meta.pkt_len_max;			//NV
+    	meta.feature18 = meta.pkt_len_min;			//NV
+    	meta.feature19 = meta.pkt_len_mean;			//NV
+		meta.feature20 = meta.fwd_header_len;		//NV
+		meta.feature21 = meta.fwd_seg_size_min;		//NV
+		meta.feature22 = meta.bwd_header_len;		//NV
+    	meta.feature23 = meta.init_fwd_win_byts;	//NV
+      	meta.feature24 = meta.init_bwd_win_byts;	//NV
+		meta.feature25 = meta.fwd_act_data_pkts;	//NV
+    	meta.feature26 = meta.flow_iat_min;			//NV
+		meta.feature27 = meta.flow_iat_max;			//NV
+    	meta.feature28 = meta.flow_iat_mean;		//NV
+    	meta.feature29 = meta.fwd_iat_min;			//NV
+		meta.feature30 = meta.fwd_iat_max;			//NV
+    	meta.feature31 = meta.fwd_iat_tot;			//NV
+    	meta.feature32 = meta.fwd_iat_mean;			//NV
+    	meta.feature33 = meta.bwd_iat_min;			//NV
+		meta.feature34 = meta.bwd_iat_max;			//NV
+    	meta.feature35 = meta.bwd_iat_tot;			//NV
+      	meta.feature36 = meta.bwd_iat_mean;			//NV
+    	meta.feature37 = meta.active_mean;			//NV
+		meta.feature38 = meta.active_min;			//NV
+     	meta.feature39 = meta.active_max;			//NV
+    	meta.feature40 = meta.idle_mean;			//NV
+		meta.feature42 = meta.idle_min;				//NV
+      	meta.feature41 = meta.idle_max;				//NV
+     	
 
 
 			meta.class = CLASS_NOT_SET;
@@ -653,16 +646,30 @@ control MyIngress(inout headers hdr,
 
 
    action fwd_iat_tot() {
-      reg_time_last_pkt.write(meta.register_index, (bit<32>)standard_metadata.ingress_global_timestamp);
+   	
+      //reg_time_last_pkt.write(meta.register_index, (bit<32>)standard_metadata.ingress_global_timestamp);
+      		bit<32> tmp_fwd_iat_tot = (bit<32>) 0;
+      		
    		reg_fwd_iat.read(meta.fwd_iat, meta.register_index);
-   		reg_fwd_iat_tot.read(meta.fwd_iat_tot, meta.register_index);
+   		
+   		reg_fwd_iat_tot.read(tmp_fwd_iat_tot, meta.register_index);
+   		
+   		log_msg("5 tupla ({}-{}-{}-{}-{}) meta.fwd_iat {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.fwd_iat});
+   		
+   		log_msg("5 tupla ({}-{}-{}-{}-{}) meta.time_last_pkt {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.time_last_pkt});
+   		
+   		log_msg("5 tupla ({}-{}-{}-{}-{}) meta.fwd_iat_tot 1 {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.fwd_iat_tot});
 
-   		//meta.fwd_iat_tot = (bit<32>) 0;
-   		meta.fwd_iat = (bit<32>)standard_metadata.ingress_global_timestamp - meta.time_last_pkt;
-   		meta.fwd_iat_tot = meta.fwd_iat_tot + meta.fwd_iat;
+   		
+   		//meta.fwd_iat = (bit<32>)standard_metadata.ingress_global_timestamp - meta.time_last_pkt;
+   		
+   		meta.fwd_iat_tot = tmp_fwd_iat_tot+ meta.fwd_iat;
 
+		log_msg("5 tupla ({}-{}-{}-{}-{}) meta.fwd_iat_tot 2 {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.fwd_iat_tot});
+		
    		reg_fwd_iat.write(meta.register_index, meta.fwd_iat);
    		reg_fwd_iat_tot.write(meta.register_index, meta.fwd_iat_tot);
+   		
 
    }
 
@@ -675,8 +682,10 @@ control MyIngress(inout headers hdr,
    	bit<8> total_fwd_pkts = meta.tot_fwd_pkts; 
    	bit<32> fwd_iat_total = meta.fwd_iat_tot;
    	
+   	
    	calculate_mean(fwd_iat_total, total_fwd_pkts, meta.fwd_iat_mean);
    	reg_fwd_iat_mean.write(meta.register_index, meta.fwd_iat_mean);
+   	log_msg("5 tupla ({}-{}-{}-{}-{}) fwd_iat_mean {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.fwd_iat_mean});
 
    }
 
@@ -685,28 +694,44 @@ control MyIngress(inout headers hdr,
 
    action fwd_iat_max() {
    	//finding the inter-arrival time max value
+   	
+   	reg_fwd_iat.read(meta.fwd_iat, meta.register_index);
    	reg_fwd_iat_max.read(meta.fwd_iat_max, meta.register_index);
    	//reg_fwd_iat.read(meta.fwd_iat, meta.register_index);
    	//meta.fwd_iat_max = (bit<32>) 0;
    	if(meta.fwd_iat > meta.fwd_iat_max) {
    		meta.fwd_iat_max = meta.fwd_iat;
+   		
 
    	}
    	reg_fwd_iat_max.write(meta.register_index, meta.fwd_iat_max);
+   	
    }
+   
+   
 
 
 
    action fwd_iat_min() {
    	//finding the inter-arrival time max value
+   	//bit<32> to_compare;
+   	
+   	reg_fwd_iat.read(meta.fwd_iat, meta.register_index);
    	reg_fwd_iat_min.read(meta.fwd_iat_min, meta.register_index);
    	//reg_fwd_iat.read(meta.fwd_iat, meta.register_index);
-   	meta.fwd_iat_min = meta.fwd_iat;
+   	//meta.fwd_iat_min = meta.fwd_iat;
+   	
    	if(meta.fwd_iat < meta.fwd_iat_min) {
    		meta.fwd_iat_min = meta.fwd_iat;
+   		
 
    	}
+   	
+   	
    	reg_fwd_iat_min.write(meta.register_index, meta.fwd_iat_min);
+   	log_msg("5 tupla ({}-{}-{}-{}-{}) meta.fwd_iat_min {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.fwd_iat_min});
+   	log_msg("5 tupla ({}-{}-{}-{}-{}) meta.fwd_iat {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.fwd_iat});
+   	
    }
 
 
@@ -716,7 +741,8 @@ control MyIngress(inout headers hdr,
     in the relative register*/
 
     action calc_Length_fwd_tot() {
-        reg_len_fwd_pkts.read(meta.len_fwd_pkts, meta.register_index);
+        //reg_len_fwd_pkts.read(meta.len_fwd_pkts, meta.register_index);
+		
         meta.len_fwd_pkts = standard_metadata.packet_length;
 
         reg_totlen_fwd_pkts.read(meta.totlen_fwd_pkts, (bit<32>)meta.register_index);
@@ -903,15 +929,21 @@ control MyIngress(inout headers hdr,
    	
    	calculate_mean(bwd_iat_tot_TMP, tot_bwd_pkts_TMP, meta.bwd_iat_mean);
    	reg_bwd_iat_mean.write(meta.register_index, meta.bwd_iat_mean);
+   	log_msg("5 tupla ({}-{}-{}-{}-{}) bwd_iat_mean {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.bwd_iat_mean});
 
    }
 
 
 
+ 
 
    action bwd_iat_max() {
    	//finding the inter-arrival time max value
+   	reg_bwd_iat.read(meta.bwd_iat, meta.register_index);
    	reg_bwd_iat_max.read(meta.bwd_iat_max, meta.register_index);
+   	
+   	//reg_bwd_iat_max.read(meta.bwd_iat_max, meta.register_index);
+   	
    	if(meta.bwd_iat > meta.bwd_iat_max) {
    		meta.bwd_iat_max = meta.bwd_iat;
 
@@ -921,16 +953,20 @@ control MyIngress(inout headers hdr,
 
 
 
+
    action bwd_iat_min() {
    	//finding the inter-arrival time max value
+   	reg_bwd_iat.read(meta.bwd_iat, meta.register_index);
    	reg_bwd_iat_min.read(meta.bwd_iat_min, meta.register_index);
    	//reg_bwd_iat.read(meta.bwd_iat, meta.register_index);
-   	meta.bwd_iat_min = meta.bwd_iat;
-   	if(meta.bwd_iat_min < meta.bwd_iat) {
+   	//meta.bwd_iat_min = meta.bwd_iat;
+   	if(meta.bwd_iat < meta.bwd_iat_min) {
    		meta.bwd_iat_min = meta.bwd_iat;
 
    	}
+   	
    	reg_bwd_iat_min.write(meta.register_index, meta.bwd_iat_min);
+   	log_msg("5 tupla ({}-{}-{}-{}-{}) bwd_iat_min {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.bwd_iat_min});
    }
 
 
@@ -1123,7 +1159,8 @@ control MyIngress(inout headers hdr,
    action iat_mean() { //modificato 5
    
         //reg_time_last_pkt.write(meta.register_index, (bit<32>)standard_metadata.ingress_global_timestamp);
-   	reg_iat.read(meta.iat, meta.register_index);
+   	//reg_iat.read(meta.iat, meta.register_index);
+   	
    	reg_iat_tot.read(meta.iat_tot, meta.register_index);
 	reg_time_last_pkt.read(meta.time_last_pkt, meta.register_index);
 	
@@ -1151,7 +1188,7 @@ control MyIngress(inout headers hdr,
 
    }
 
-   action iat_max() {
+   action iat_max() { //TODO
    	//finding the inter-arrival time max value
    	reg_flow_iat_max.read(meta.flow_iat_max, meta.register_index);
    	reg_iat.read(meta.iat, meta.register_index);
@@ -1164,7 +1201,7 @@ control MyIngress(inout headers hdr,
 
 
 
-   action iat_min() {
+   action iat_min() { //TODO
    	//finding the inter-arrival time max value
    	reg_flow_iat_min.read(meta.flow_iat_min, meta.register_index);
    	reg_iat.read(meta.iat, meta.register_index);
@@ -1178,7 +1215,7 @@ control MyIngress(inout headers hdr,
 
 
 
-     action active_mean() { //modificato 6
+     action active_mean() { //modificato 6 //TODO
 
     	//reg_time_last_pkt.write(meta.register_index, (bit<32>)standard_metadata.ingress_global_timestamp);
     	//reg_time_first_pkt.read(meta.time_first_pkt, meta.register_index);
@@ -1204,12 +1241,13 @@ control MyIngress(inout headers hdr,
     	
     	calculate_mean(active_tot_TMP, packets_TMP, meta.active_mean);
     	reg_active_mean.write(meta.register_index, meta.active_mean);
+    	log_msg("5 tupla ({}-{}-{}-{}-{}) active_mean {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.active_mean});
 
     }
 
 
 
-    action active_max() {
+    action active_max() { //TODO 
 
     	//reg_active_vals.read(meta.active_vals, meta.register_index);
 	reg_active_max.read(meta.active_max, meta.register_index);
@@ -1223,7 +1261,7 @@ control MyIngress(inout headers hdr,
 
 
 
-    action active_min() {
+    action active_min() { //TODO
 
 
     	//reg_active_vals.read(meta.active_vals, meta.register_index);
@@ -1239,7 +1277,7 @@ control MyIngress(inout headers hdr,
 
 
 
-    action idle_mean() { //modificato 7
+    action idle_mean() { //modificato 7 //TODO
 
     	//reg_time_last_pkt.write(meta.register_index, (bit<32>)standard_metadata.ingress_global_timestamp);
     	reg_idle_vals.read(meta.idle_vals, meta.register_index);
@@ -1259,6 +1297,7 @@ control MyIngress(inout headers hdr,
     	
     	calculate_mean(idle_tot_TMP, packets_TMP, meta.idle_mean);
     	reg_idle_mean.write(meta.register_index, meta.idle_mean);
+    	log_msg("5 tupla ({}-{}-{}-{}-{}) idle_mean {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.idle_mean});
 
     }
 
@@ -1288,6 +1327,7 @@ control MyIngress(inout headers hdr,
 		meta.idle_min = meta.idle_vals;
 	}
 	reg_idle_min.write(meta.register_index, meta.idle_min);
+	log_msg("5 tupla ({}-{}-{}-{}-{}) idle_min {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.idle_min});
 
     }
 
@@ -1299,7 +1339,7 @@ control MyIngress(inout headers hdr,
             
         //meta.fin_flag_cnt = (bit<1>) 0;
 	if (hdr.tcp.fin == (bit<1>) 1) {
-		meta.fin_flag_cnt = meta.fin_flag_cnt + (bit<1>) 1;
+		meta.fin_flag_cnt = meta.fin_flag_cnt + (bit<8>) 1;
 	}
 	//else{
 	//	meta.fin_flag_cnt = (bit<1>) 0;
@@ -1314,7 +1354,7 @@ control MyIngress(inout headers hdr,
         
         //meta.syn_flag_cnt = (bit<1>) 0;
 	if (hdr.tcp.syn == (bit<1>) 1) {
-		meta.syn_flag_cnt = meta.syn_flag_cnt + (bit<1>) 1;
+		meta.syn_flag_cnt = meta.syn_flag_cnt + (bit<8>) 1;
 	}
 	//else{
 	//	meta.syn_flag_cnt = (bit<1>) 0;
@@ -1329,7 +1369,7 @@ control MyIngress(inout headers hdr,
         
       
 	if (hdr.tcp.ece == (bit<1>) 1) {
-	    meta.ece_flag_cnt = meta.ece_flag_cnt+(bit<1>) 1;
+	    meta.ece_flag_cnt = meta.ece_flag_cnt+(bit<8>) 1;
 	}
 	//else{
 	  //  meta.ece_flag_cnt = (bit<1>) 0;
@@ -1345,7 +1385,7 @@ control MyIngress(inout headers hdr,
         
         if (hdr.tcp.ack == (bit<1>) 1) {
         
-	    meta.ack_flag_cnt = meta.ack_flag_cnt+(bit<1>) 1;
+	    meta.ack_flag_cnt = meta.ack_flag_cnt+(bit<8>) 1;
 	}
 	//else{
 	  //  meta.ack_flag_cnt = (bit<1>) 0;
@@ -1358,8 +1398,8 @@ control MyIngress(inout headers hdr,
         reg_rst_flag_cnt.read(meta.rst_flag_cnt, (bit<32>)meta.register_index);
         
         //meta.rst_flag_cnt = (bit<1>) 0;
-	if (hdr.tcp.rst == (bit<1>) 1) {
-	    meta.rst_flag_cnt = meta.rst_flag_cnt + (bit<1>) 1;
+	if (hdr.tcp.rst == (bit<1>) 1 ) {
+	    meta.rst_flag_cnt = meta.rst_flag_cnt + (bit<8>) 1;
 	}
 	//else{
 	  //  meta.rst_flag_cnt = (bit<1>) 0;
@@ -1372,7 +1412,7 @@ control MyIngress(inout headers hdr,
         reg_psh_flag_cnt.read(meta.psh_flag_cnt, (bit<32>)meta.register_index);
         //meta.psh_flag_cnt = (bit<1>) 0;
 	if (hdr.tcp.psh == (bit<1>) 1) {
-	    meta.psh_flag_cnt = meta.psh_flag_cnt+(bit<1>) 1;
+	    meta.psh_flag_cnt = meta.psh_flag_cnt+(bit<8>) 1;
 	}
 	//else{
 	  //  meta.psh_flag_cnt = (bit<1>) 0;
@@ -1387,7 +1427,7 @@ control MyIngress(inout headers hdr,
         //meta.urg_flag_cnt = (bit<1>) 0;
         
 	if (hdr.tcp.urg == (bit<1>) 1) {
-	    meta.urg_flag_cnt = meta.urg_flag_cnt+(bit<1>) 1;
+	    meta.urg_flag_cnt = meta.urg_flag_cnt+(bit<8>) 1;
 	}
 	//else{
 	  //  meta.urg_flag_cnt = (bit<1>) 0;
@@ -1401,55 +1441,56 @@ control MyIngress(inout headers hdr,
     @suppress_warnings(unused)
     action CheckFeature(bit<16> node_id, bit<16> f_inout, bit<64> threshold) {
 
-        bit<8> feature0 = 0; //tot_fwd_pkts
-        bit<8> feature1 = 0; //tot_bwd_pkts
-        bit<32> feature2 = 0; //totlen_fwd_pkts
-        bit<32> feature3 = 0; //totlen_bwd_pkts
-        bit<32> feature4 = 0; //fwd_pkt_len_max
-        bit<32> feature5 = 0; //fwd_pkt_len_min
-        bit<32> feature6 = 0; //fwd_pkt_len_mean
-        bit<32> feature7 = 0; //bwd_pkt_len_max
-        bit<32> feature8 = 0; //bwd_pkt_len_min
-        bit<32> feature9 = 0; //bwd_pkt_len_mean
-        bit<1> feature10 = 0; //fin_flag_count
-        bit<1> feature11 = 0; //syn_flag_count
-        bit<1> feature12 = 0; //rst_flag_count
-        bit<1> feature13 = 0; //psh_flag_count
-        bit<1> feature14 = 0; //ack_flag_count
-        bit<1> feature15 = 0; //urg_flag_count
-        bit<1> feature16 = 0; //ece_flag_count
-        bit<32> feature17 = 0; //pkt_len_max
-        bit<32> feature18 = 0; //pkt_len_min
-        bit<32> feature19 = 0; //pkt_len_mean
-        bit<16> feature20 = 0; //fwd_header_len
-        bit<16> feature21 = 0; //bwd_header_len
-        bit<16> feature22 = 0; //fwd_seg_size_min
-        bit<32> feature23 = 0; //fwd_act_data_pkts
-        bit<32> feature24 = 0; //flow_iat_mean
-        bit<32> feature25 = 0; //flow_iat_max
-        bit<32> feature26 = 0; //flow_iat_min
-        bit<32> feature27 = 0; //fwd_iat_tot
-        bit<32> feature28 = 0; //fwd_iat_mean
-        bit<32> feature29 = 0; //fwd_iat_max
-        bit<32> feature30 = 0; //fwd_iat_min
-        bit<32> feature31 = 0; //bwd_iat_tot
-        bit<32> feature32 = 0; //bwd_iat_mean
-        bit<32> feature33 = 0; //bwd_iat_max
-        bit<32> feature34 = 0; //bwd_iat_min
-        bit<16> feature35 = 0; //init_fwd_win_byts
-        bit<16> feature36 = 0; //init_bwd_win_byts
-        bit<32> feature37 = 0; //active_mean
-        bit<32> feature38 = 0; //active_max
-        bit<32> feature39 = 0; //active_min
-        bit<32> feature40 = 0; //idle_mean
-        bit<32> feature41 = 0; //idle_max
-        bit<32> feature42 = 0; //idle_min
+        bit<8> feature0 = 0;  //fin_flag_count      NV
+        bit<8> feature1 = 0;  //syn_flag_count      NV
+        bit<8> feature2 = 0; //rst_flag_count      NV
+        bit<8> feature3 = 0; //psh_flag_count      NV
+        bit<8> feature4 = 0; //ack_flag_count      NV
+        bit<8> feature5 = 0; //urg_flag_count      NV
+        bit<8> feature6 = 0; //ece_flag_count      NV
+        bit<8> feature7 = 0; //tot_fwd_pkts         NV
+        bit<8> feature8 = 0; //tot_bwd_pkts         NV
+        bit<32> feature9 = 0; //totlen_fwd_pkts    	NV
+        bit<32> feature10 = 0; //totlen_bwd_pkts    NV
+        bit<32> feature11 = 0; //fwd_pkt_len_min  	NV
+        bit<32> feature12 = 0; //fwd_pkt_len_max    NV
+        bit<32> feature13 = 0; //fwd_pkt_len_mean   NV
+        bit<32> feature14 = 0; //bwd_pkt_len_min   	NV
+        bit<32> feature15 = 0; //bwd_pkt_len_max   	NV
+        bit<32> feature16 = 0; //bwd_pkt_len_mean  	NV
+        bit<32> feature17 = 0; //pkt_len_max	    NV
+        bit<32> feature18 = 0; //pkt_len_min        NV
+        bit<32> feature19 = 0; //pkt_len_mean       NV
+        bit<16> feature20 = 0; //fwd_header_len     NV
+        bit<16> feature21 = 0; //fwd_seg_size_min   NV
+        bit<16> feature22 = 0; //bwd_header_len     NV
+        bit<16> feature23 = 0; //init_fwd_win_byts  NV
+        bit<16> feature24 = 0; //init_bwd_win_byts  NV
+        bit<32> feature25 = 0; //fwd_act_data_pkts  NV
+        bit<32> feature26 = 0; //flow_iat_min       NV
+        bit<32> feature27 = 0; //flow_iat_max       NV
+        bit<32> feature28 = 0; //flow_iat_mean      NV
+        bit<32> feature29 = 0; //fwd_iat_min        NV
+        bit<32> feature30 = 0; //fwd_iat_max        NV
+        bit<32> feature31 = 0; //fwd_iat_tot        NV
+        bit<32> feature32 = 0; //fwd_iat_mean       NV
+        bit<32> feature33 = 0; //bwd_iat_min        NV
+        bit<32> feature34 = 0; //bwd_iat_max        NV
+        bit<32> feature35 = 0; //bwd_iat_tot        NV
+        bit<32> feature36 = 0; //bwd_iat_mean       NV
+        bit<32> feature37 = 0; //active_mean        NV
+        bit<32> feature38 = 0; //active_min         NV
+        bit<32> feature39 = 0; //active_max         NV
+        bit<32> feature40 = 0; //idle_mean          NV
+        bit<32> feature41 = 0; //idle_min           NV
+        bit<32> feature42 = 0; //idle_max		    NV 
 
         bit<64> th = threshold;
-				bit<16> f = f_inout + 1;
+		bit<16> f = f_inout; //+ 1;					NV
 
 
-        
+        //here there is the mapping of the features for the application of the model
+        //it's possible to see that some of the features are multiplied by 1000000, as they care about the time and without that, they will be considered in microseconds.
 	if (f == 0) {
 	    feature0 = meta.feature0;
 	}
@@ -1475,7 +1516,7 @@ control MyIngress(inout headers hdr,
 	    feature7 = meta.feature7;
 	}
 	else if (f == 8) {
-	    feature8 = meta.feature9;
+	    feature8 = meta.feature8;
 	}
 	else if (f == 9) {
 	    feature9 = meta.feature9;
@@ -1523,61 +1564,61 @@ control MyIngress(inout headers hdr,
 	    feature23 = meta.feature23;
 	}
 	else if (f == 24) {
-	    feature24 = meta.feature24;
+	    feature24 = meta.feature24; //era flow_iat_mean ora  init_bwd_win_byts
 	}
 	else if (f == 25) {
-	    feature25 = meta.feature25;
+	    feature25 = meta.feature25; //era flow_iat_max ora  fwd_act_data_pkts
 	}
 	else if (f == 26) {
-	    feature26 = meta.feature26;
+	    feature26 = meta.feature26*1000000; //flow_iat_min
 	}
 	else if (f == 27) {
-	    feature27 = meta.feature27;
+	    feature27 = meta.feature27*1000000; //flow_iat_max
 	}
 	else if (f == 28) {
-	    feature28 = meta.feature28;
+	    feature28 = meta.feature28*1000000; //flow_iat_mean
 	}
 	else if (f == 29) {
-	    feature29 = meta.feature29;
+	    feature29 = meta.feature29*1000000;//fwd_iat_min
 	}
 	else if (f == 30) {
-	    feature30 = meta.feature30;
+	    feature30 = meta.feature30*1000000;//fwd_iat_max
 	}
 	else if (f == 31) {
-	    feature31 = meta.feature31;
+	    feature31 = meta.feature31*1000000; //fwd_iat_tot
 	}
 	else if (f == 32) {
-	    feature32 = meta.feature32;
+	    feature32 = meta.feature32*1000000;//fwd_iat_mean
 	}
 	else if (f == 33) {
-	    feature33 = meta.feature33;
+	    feature33 = meta.feature33*1000000;//bwd_iat_min
 	}
 	else if (f == 34) {
-	    feature34 = meta.feature34;
+	    feature34 = meta.feature34*1000000;//bwd_iat_max
 	}
 	else if (f == 35) {
-	    feature35 = meta.feature35;
+	    feature35 = meta.feature35*1000000; //bwd_iat_tot
 	}
 	else if (f == 36) {
-	    feature36 = meta.feature36;
+	    feature36 = meta.feature36*1000000; //bwd_iat_mean
 	}
 	else if (f == 37) {
-	    feature37 = meta.feature37;
+	    feature37 = meta.feature37*1000000; //active_mean
 	}
 	else if (f == 38) {
-	    feature38 = meta.feature38;
+	    feature38 = meta.feature38*1000000;//era active_min
 	}
 	else if (f == 39) {
-	    feature39 = meta.feature39;
+	    feature39 = meta.feature39*1000000;//active_max
 	}
 	else if (f == 40) {
-	    feature40 = meta.feature40;
+	    feature40 = meta.feature40*1000000;//idle_mean
 	}
 	else if (f == 41) {
-	    feature41 = meta.feature41;
+	    feature41 = meta.feature41*1000000; //idle_min
 	}
 	else if (f == 42) {
-	    feature42 = meta.feature42;
+	    feature42 = meta.feature42*1000000; //idle_max
 	}
 
 
@@ -1587,49 +1628,49 @@ control MyIngress(inout headers hdr,
 	if (feature1 <= (bit<8>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature2 <= (bit<32>)th) meta.isTrue = 1;
+	if (feature2 <= (bit<8>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature3 <= (bit<32>)th) meta.isTrue = 1;
+	if (feature3 <= (bit<8>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature4 <= (bit<32>)th) meta.isTrue = 1;
+	if (feature4 <= (bit<8>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature5 <= (bit<32>)th) meta.isTrue = 1;
+	if (feature5 <= (bit<8>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature6 <= (bit<32>)th) meta.isTrue = 1;
+	if (feature6 <= (bit<8>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature7 <= (bit<32>)th) meta.isTrue = 1;
+	if (feature7 <= (bit<8>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature8 <= (bit<32>)th) meta.isTrue = 1;
+	if (feature8 <= (bit<8>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
 	if (feature9 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature10 <= (bit<1>)th) meta.isTrue = 1;
+	if (feature10 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature11 <= (bit<1>)th) meta.isTrue = 1;
+	if (feature11 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature12 <= (bit<1>)th) meta.isTrue = 1;
+	if (feature12 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature13 <= (bit<1>)th) meta.isTrue = 1;
+	if (feature13 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature14 <= (bit<1>)th) meta.isTrue = 1;
+	if (feature14 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature15 <= (bit<1>)th) meta.isTrue = 1;
+	if (feature15 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature16 <= (bit<1>)th) meta.isTrue = 1;
+	if (feature16 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
 	if (feature17 <= (bit<32>)th) meta.isTrue = 1;
@@ -1650,10 +1691,10 @@ control MyIngress(inout headers hdr,
 	if (feature22 <= (bit<16>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature23 <= (bit<32>)th) meta.isTrue = 1;
+	if (feature23 <= (bit<16>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature24 <= (bit<32>)th) meta.isTrue = 1;
+	if (feature24 <= (bit<16>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
 	if (feature25 <= (bit<32>)th) meta.isTrue = 1;
@@ -1686,10 +1727,10 @@ control MyIngress(inout headers hdr,
 	if (feature34 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature35 <= (bit<16>)th) meta.isTrue = 1;
+	if (feature35 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
-	if (feature36 <= (bit<16>)th) meta.isTrue = 1;
+	if (feature36 <= (bit<32>)th) meta.isTrue = 1;
 	else meta.isTrue = 0;
 
 	if (feature37 <= (bit<32>)th) meta.isTrue = 1;
@@ -2433,7 +2474,7 @@ control MyIngress(inout headers hdr,
 	 	bit<32> originale;
     if (hdr.ipv4.isValid()) {
 		//Calculate all features
-
+		
 		if (hdr.ipv4.protocol == 6 || hdr.ipv4.protocol == 17) {
     			if (hdr.ipv4.protocol == 6) {
     				get_register_index_tcp();
@@ -2469,7 +2510,7 @@ control MyIngress(inout headers hdr,
 	        	//originale = tmp; 
 	        	if(tmp == 0){
 
-	        		// devo capire se il pacchetto fa parte di un flusso in backwarding --> hai register index_inverse
+	        		// devo capire se il pacchetto fa parte di un flusso in backwarding  hai register index_inverse
 	        		reg_flow.read(tmp, meta.register_index_inverse);
 	        		if(tmp != 0){
 
@@ -2498,7 +2539,7 @@ control MyIngress(inout headers hdr,
 			
 			
 			
-			reg_time_last_pkt.write(meta.register_index, meta.time_last_pkt);
+			//reg_time_last_pkt.write(meta.register_index, meta.time_last_pkt);
 			
 			
 
@@ -2517,9 +2558,30 @@ control MyIngress(inout headers hdr,
 
 
 
-	        	if (meta.direction == 0) {
+	        	if (meta.direction == 0) {  //NV
 				count_pkts_fwd(); //va eseguito sempre per primo
 	        		//tot_f_pkts.apply();
+	        		log_msg("5 tupla ({}-{}-{}-{}-{}) meta.is_first {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.is_first});
+	        		//reg_fwd_iat.read(meta.fwd_iat, meta.register_index);
+	        		//reg_time_last_pkt.write(meta.register_index, meta.time_last_pkt);
+	        		if (meta.is_first == 1){ //NV
+	        			meta.fwd_iat = meta.time_last_pkt;
+	        			
+	        			reg_fwd_iat.write(meta.register_index, meta.time_last_pkt);
+	        			
+	        			reg_time_last_pkt.write(meta.register_index, meta.time_last_pkt);
+	        		}
+	        		else{ //NV
+	        			reg_time_last_pkt.read(meta.time_last_pkt, meta.register_index); // prendo l'ultimo time stamp
+	        			
+	        			meta.fwd_iat = (bit<32>)standard_metadata.ingress_global_timestamp - meta.time_last_pkt;
+	        			
+	        			reg_fwd_iat.write(meta.register_index, meta.fwd_iat);
+	        			
+	        			reg_time_last_pkt.write(meta.register_index, (bit<32>)standard_metadata.ingress_global_timestamp);
+	        		}
+	        		
+	        		
 				f_iat_tot.apply();
 				f_iat_mean.apply();
 				f_iat_max.apply();
@@ -2543,6 +2605,23 @@ control MyIngress(inout headers hdr,
                         else if (meta.direction == 1){
 
 				count_pkts_bwd(); //va eseguito sempre per primo
+	        		if (meta.is_first == 1){ //NV
+	        			meta.bwd_iat = meta.time_last_pkt;
+	        			
+	        			reg_bwd_iat.write(meta.register_index, meta.time_last_pkt);
+	        			
+	        			reg_time_last_pkt.write(meta.register_index, meta.time_last_pkt);
+	        		}
+	        		else{ //NV
+	        			reg_time_last_pkt.read(meta.time_last_pkt, meta.register_index); // prendo l'ultimo time stamp
+	        			
+	        			meta.bwd_iat = (bit<32>)standard_metadata.ingress_global_timestamp - meta.time_last_pkt;
+	        			
+	        			reg_bwd_iat.write(meta.register_index, meta.bwd_iat);
+	        			
+	        			reg_time_last_pkt.write(meta.register_index, (bit<32>)standard_metadata.ingress_global_timestamp);
+	        		}
+	        		
 			        //tot_b_pkts.apply();
 			        b_iat_tot.apply();
     				b_iat_mean.apply();
@@ -2557,6 +2636,9 @@ control MyIngress(inout headers hdr,
     			        log_msg("5 tupla ({}-{}-{}-{}-{}) hash {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.register_index_inverse});
 			 }
 
+			//TODO add update IAT general
+			
+			
 			reg_time_first_pkt.read(meta.time_first_pkt, meta.register_index);
 			calc_dur();
 			packet_len_tot();
