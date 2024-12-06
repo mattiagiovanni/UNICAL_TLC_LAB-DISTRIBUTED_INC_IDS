@@ -1,6 +1,8 @@
 #include <core.p4>
 #include <v1model.p4>
 
+//051224
+
 const bit<16> TYPE_IPV4 = 0x800;
 
 #define MAX_REGISTER_ENTRIES 8192
@@ -685,7 +687,6 @@ control MyIngress(inout headers hdr,
    	
    	calculate_mean(fwd_iat_total, total_fwd_pkts, meta.fwd_iat_mean);
    	reg_fwd_iat_mean.write(meta.register_index, meta.fwd_iat_mean);
-   	log_msg("5 tupla ({}-{}-{}-{}-{}) fwd_iat_mean {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.fwd_iat_mean});
 
    }
 
@@ -729,8 +730,7 @@ control MyIngress(inout headers hdr,
    	
    	
    	reg_fwd_iat_min.write(meta.register_index, meta.fwd_iat_min);
-   	log_msg("5 tupla ({}-{}-{}-{}-{}) meta.fwd_iat_min {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.fwd_iat_min});
-   	log_msg("5 tupla ({}-{}-{}-{}-{}) meta.fwd_iat {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.fwd_iat});
+   	
    	
    }
 
@@ -929,7 +929,6 @@ control MyIngress(inout headers hdr,
    	
    	calculate_mean(bwd_iat_tot_TMP, tot_bwd_pkts_TMP, meta.bwd_iat_mean);
    	reg_bwd_iat_mean.write(meta.register_index, meta.bwd_iat_mean);
-   	log_msg("5 tupla ({}-{}-{}-{}-{}) bwd_iat_mean {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.bwd_iat_mean});
 
    }
 
@@ -966,7 +965,6 @@ control MyIngress(inout headers hdr,
    	}
    	
    	reg_bwd_iat_min.write(meta.register_index, meta.bwd_iat_min);
-   	log_msg("5 tupla ({}-{}-{}-{}-{}) bwd_iat_min {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.bwd_iat_min});
    }
 
 
@@ -1241,7 +1239,6 @@ control MyIngress(inout headers hdr,
     	
     	calculate_mean(active_tot_TMP, packets_TMP, meta.active_mean);
     	reg_active_mean.write(meta.register_index, meta.active_mean);
-    	log_msg("5 tupla ({}-{}-{}-{}-{}) active_mean {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.active_mean});
 
     }
 
@@ -1297,7 +1294,6 @@ control MyIngress(inout headers hdr,
     	
     	calculate_mean(idle_tot_TMP, packets_TMP, meta.idle_mean);
     	reg_idle_mean.write(meta.register_index, meta.idle_mean);
-    	log_msg("5 tupla ({}-{}-{}-{}-{}) idle_mean {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.idle_mean});
 
     }
 
@@ -1327,7 +1323,6 @@ control MyIngress(inout headers hdr,
 		meta.idle_min = meta.idle_vals;
 	}
 	reg_idle_min.write(meta.register_index, meta.idle_min);
-	log_msg("5 tupla ({}-{}-{}-{}-{}) idle_min {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.idle_min});
 
     }
 
@@ -1761,20 +1756,8 @@ control MyIngress(inout headers hdr,
     @suppress_warnings(unused)
     action SetClass(bit<16> node_id, bit<3> class) {
 	meta.class = class;
-	meta.node_id = node_id; //just for debugging otherwise not needed
+	meta.node_id = node_id; 
     }
-
-    //@suppress_warnings(unused)
-    //action SetClass2(bit<16> node_id, bit<3> class2) {
-	//meta.class2 = class2;
-	//meta.node_id = node_id; //just for debugging otherwise not needed
-    //}
-
-    //@suppress_warnings(unused)
-    //action SetClass3(bit<16> node_id, bit<3> class3) {
-	//meta.class3 = class3;
-	//meta.node_id = node_id; //just for debugging otherwise not needed
-    //}
 
 
 
@@ -2561,7 +2544,6 @@ control MyIngress(inout headers hdr,
 	        	if (meta.direction == 0) {  //NV
 				count_pkts_fwd(); //va eseguito sempre per primo
 	        		//tot_f_pkts.apply();
-	        		log_msg("5 tupla ({}-{}-{}-{}-{}) meta.is_first {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.is_first});
 	        		//reg_fwd_iat.read(meta.fwd_iat, meta.register_index);
 	        		//reg_time_last_pkt.write(meta.register_index, meta.time_last_pkt);
 	        		if (meta.is_first == 1){ //NV
@@ -2572,7 +2554,7 @@ control MyIngress(inout headers hdr,
 	        			reg_time_last_pkt.write(meta.register_index, meta.time_last_pkt);
 	        		}
 	        		else{ //NV
-	        			reg_time_last_pkt.read(meta.time_last_pkt, meta.register_index); // prendo l'ultimo time stamp
+	        			reg_time_last_pkt.read(meta.time_last_pkt, meta.register_index); 
 	        			
 	        			meta.fwd_iat = (bit<32>)standard_metadata.ingress_global_timestamp - meta.time_last_pkt;
 	        			
@@ -2594,7 +2576,6 @@ control MyIngress(inout headers hdr,
 				f_seg_size_min.apply();
 				f_act_data_pkts.apply();
     				init_f_win_byts.apply();
-    				log_msg("5 tupla ({}-{}-{}-{}-{}) hash {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.register_index});
     				
    				
 
@@ -2613,7 +2594,7 @@ control MyIngress(inout headers hdr,
 	        			reg_time_last_pkt.write(meta.register_index, meta.time_last_pkt);
 	        		}
 	        		else{ //NV
-	        			reg_time_last_pkt.read(meta.time_last_pkt, meta.register_index); // prendo l'ultimo time stamp
+	        			reg_time_last_pkt.read(meta.time_last_pkt, meta.register_index); 
 	        			
 	        			meta.bwd_iat = (bit<32>)standard_metadata.ingress_global_timestamp - meta.time_last_pkt;
 	        			
@@ -2633,10 +2614,8 @@ control MyIngress(inout headers hdr,
     				b_pkt_len_min.apply();
     				b_header_len.apply();
     			        init_b_win_byts.apply();
-    			        log_msg("5 tupla ({}-{}-{}-{}-{}) hash {}", {hdr.ipv4.srcAddr, hdr.ipv4.dstAddr, hdr.tcp.srcPort, hdr.tcp.dstPort, hdr.ipv4.protocol, meta.register_index_inverse});
 			 }
 
-			//TODO add update IAT general
 			
 			
 			reg_time_first_pkt.read(meta.time_first_pkt, meta.register_index);
@@ -2652,7 +2631,7 @@ control MyIngress(inout headers hdr,
     			id_mean.apply();
     			id_max.apply();
     			id_min.apply();
-    			packet_length_mean.apply(); //dopo packet_len_tot sempre che riempie meta.packet_lenTot
+    			packet_length_mean.apply(); 
     			packet_length_max.apply();
     			packet_length_min.apply();
 
@@ -2693,7 +2672,7 @@ control MyIngress(inout headers hdr,
 			reg_tot_fwd_pkts.read(pkt_fwd_cnt, meta.register_index);
 			bit<8> pkts;
 			pkts = pkt_fwd_cnt + pkt_bwd_cnt;
-			log_msg("prima {}", {meta.packets});
+
 			
 			if(pkts >= PACKET_THR) {
 			log_msg("dopo {}", {pkts});
@@ -2720,15 +2699,15 @@ control MyIngress(inout headers hdr,
 
 				log_msg("processed");
 				if (meta.class <= 1) meta.class = 0;
-				else meta.class = 1;
+				else meta.class = 1; 
 
 			}
 
 			
 
-            		           log_msg("Source_IP={}, Destination_IP={}, Source Port={}, Destination Port={}, Protocol={}, Dur={}, HAS_fin={}, HAS_syn={}, HAS_rst={}, HAS_psh={}, HAS_ack={}, HAS_urg={}, HAS_ece={}, Tot_Fwd_Packets={}, Tot_Bwd_Packets={}, Tot_Length_Fwd={}, Tot_Length_Bwd={}, Min_Fwd_Length={}, Max_Fwd_Length={}, Mean_Fwd_Length={}, Min_Bwd_Length={}, Max_Bwd_Length={}, Mean_Bwd_Length={}, Max_pkt_len={}, Min_pkt_len={}, Tot_pkt_len= {}, Mean_pkt_len={}, FWD_HEADER={}, FWD_SEG_SIZE_MIN={}, BWD_HEADER={}, FWD_Window={}, BWD_Window={}, FWD_PAY_Packets={}, FLOW_IAT_MIN={}, FLOW_IAT_MAX={}, FLOW_IAT_MEAN={}, FWD_IAT_MIN={}, FWD_IAT_MAX={}, FWD_IAT_TOT={}, FWD_IAT_MEAN={}, BWD_IAT_MIN={}, BWD_IAT_MAX={}, BWD_IAT_TOT={}, BWD_IAT_MEAN={}, Active_mean={}, Active_min={}, Active_max={}, Idle_mean={}, Idle_min={}, Idle_max={}, Packets={}, Class={}, Header= {}, TMP= {},FLOW= {}, INDEX= {}, INVERSE={}", {meta.src_ip, meta.dst_ip, meta.src_port, meta.dst_port, meta.proto, meta.flow_duration, meta.fin_flag_cnt, meta.syn_flag_cnt, meta.rst_flag_cnt, meta.psh_flag_cnt, meta.ack_flag_cnt, meta.urg_flag_cnt, meta.ece_flag_cnt, meta.tot_fwd_pkts, meta.tot_bwd_pkts, meta.totlen_fwd_pkts, meta.totlen_bwd_pkts, meta.fwd_pkt_len_min, meta.fwd_pkt_len_max, meta.fwd_pkt_len_mean, meta.bwd_pkt_len_min, meta.bwd_pkt_len_max, meta.bwd_pkt_len_mean, meta.pkt_len_max, meta.pkt_len_min, meta.totLen_pkts, meta.pkt_len_mean, meta.fwd_header_len, meta.fwd_seg_size_min, meta.bwd_header_len, meta.init_fwd_win_byts, meta.init_bwd_win_byts, meta.fwd_act_data_pkts, meta.flow_iat_min, meta.flow_iat_max, meta.flow_iat_mean, meta.fwd_iat_min, meta.fwd_iat_max, meta.fwd_iat_tot, meta.fwd_iat_mean, meta.bwd_iat_min, meta.bwd_iat_max, meta.bwd_iat_tot, meta.bwd_iat_mean, meta.active_mean, meta.active_min, meta.active_max, meta.idle_mean, meta.idle_min, meta.idle_max, meta.packets, meta.class, (bit<16>)hdr.ipv4.ihl*4, tmp, meta.flow, meta.register_index, meta.register_index_inverse});
+            		          
 
-                }//this is for closing the tcp and udp condition
+                }
 
                ipv4_lpm.apply();
 
