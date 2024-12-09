@@ -1,0 +1,152 @@
+table_clear MyIngress.ipv4_lpm
+table_set_default MyIngress.ipv4_lpm MyIngress.drop
+table_set_default MyIngress.ack_flag MyIngress.ack_fl
+table_set_default MyIngress.b_iat_mean MyIngress.bwd_iat_mean
+table_set_default MyIngress.f_act_data_pkts MyIngress.count_payload
+table_set_default MyIngress.init_b_win_byts MyIngress.window_bwd
+table_set_default MyIngress.act_mean MyIngress.active_mean 
+table_set_default MyIngress.f_iat_mean MyIngress.fwd_iat_mean
+table_set_default MyIngress.tot_b_pkts MyIngress.count_pkts_bwd
+table_set_default MyIngress.f_iat_tot MyIngress.fwd_iat_tot
+table_set_default MyIngress.b_iat_mean MyIngress.bwd_iat_mean
+table_set_default MyIngress.act_max MyIngress.active_max 
+table_set_default MyIngress.id_mean MyIngress.idle_mean
+table_set_default MyIngress.id_min MyIngress.idle_min
+table_set_default MyIngress.totlen_b_pkts MyIngress.calc_Length_fwd_tot
+table_set_default MyIngress.totlen_f_pkts MyIngress.calc_Length_bwd_tot
+table_set_default MyIngress.packet_length_mean MyIngress.packet_len_mean
+table_set_default MyIngress.b_pkt_len_max MyIngress.calc_max_bwd
+
+table_add MyIngress.level1 MyIngress.CheckFeature 0 0 1 => 1 31 145163
+table_add MyIngress.level2 MyIngress.CheckFeature 1 31 1 => 2 31 348
+table_add MyIngress.level3 MyIngress.CheckFeature 2 31 1 => 3 8 9
+table_add MyIngress.level4 MyIngress.CheckFeature 3 8 1 => 4 8 0
+table_add MyIngress.level5 MyIngress.CheckFeature 4 8 1 => 5 28 212
+table_add MyIngress.level6 MyIngress.CheckFeature 5 28 1 => 6 25 0
+table_add MyIngress.level7 MyIngress.CheckFeature 6 25 1 => 7 28 1
+table_add MyIngress.level8 MyIngress.SetClass 7 28 1 => 8 0
+table_add MyIngress.level8 MyIngress.SetClass 7 28 0 => 9 0
+table_add MyIngress.level7 MyIngress.CheckFeature 6 25 0 => 10 28 0
+table_add MyIngress.level8 MyIngress.SetClass 10 28 1 => 11 0
+table_add MyIngress.level8 MyIngress.SetClass 10 28 0 => 12 0
+table_add MyIngress.level6 MyIngress.CheckFeature 5 28 0 => 13 28 327
+table_add MyIngress.level7 MyIngress.CheckFeature 13 28 1 => 14 28 249
+table_add MyIngress.level8 MyIngress.SetClass 14 28 1 => 15 0
+table_add MyIngress.level8 MyIngress.SetClass 14 28 0 => 16 0
+table_add MyIngress.level7 MyIngress.CheckFeature 13 28 0 => 17 28 341
+table_add MyIngress.level8 MyIngress.SetClass 17 28 1 => 18 0
+table_add MyIngress.level8 MyIngress.SetClass 17 28 0 => 19 1
+table_add MyIngress.level5 MyIngress.CheckFeature 4 8 0 => 20 15 897
+table_add MyIngress.level6 MyIngress.CheckFeature 20 15 1 => 21 31 329
+table_add MyIngress.level7 MyIngress.CheckFeature 21 31 1 => 22 28 58
+table_add MyIngress.level8 MyIngress.SetClass 22 28 1 => 23 0
+table_add MyIngress.level8 MyIngress.SetClass 22 28 0 => 24 0
+table_add MyIngress.level7 MyIngress.CheckFeature 21 31 0 => 25 36 1185
+table_add MyIngress.level8 MyIngress.SetClass 25 36 1 => 26 0
+table_add MyIngress.level8 MyIngress.SetClass 25 36 0 => 27 1
+table_add MyIngress.level6 MyIngress.CheckFeature 20 15 0 => 28 15 992
+table_add MyIngress.level7 MyIngress.SetClass 28 15 1 => 29 1
+table_add MyIngress.level7 MyIngress.SetClass 28 15 0 => 30 0
+table_add MyIngress.level4 MyIngress.CheckFeature 3 8 0 => 31 15 102
+table_add MyIngress.level5 MyIngress.SetClass 31 15 1 => 32 0
+table_add MyIngress.level5 MyIngress.SetClass 31 15 0 => 33 1
+table_add MyIngress.level3 MyIngress.CheckFeature 2 31 0 => 34 18 6
+table_add MyIngress.level4 MyIngress.CheckFeature 34 18 1 => 35 28 564
+table_add MyIngress.level5 MyIngress.CheckFeature 35 28 1 => 36 25 0
+table_add MyIngress.level6 MyIngress.CheckFeature 36 25 1 => 37 31 564
+table_add MyIngress.level7 MyIngress.CheckFeature 37 31 1 => 38 28 281
+table_add MyIngress.level8 MyIngress.SetClass 38 28 1 => 39 0
+table_add MyIngress.level8 MyIngress.SetClass 38 28 0 => 40 1
+table_add MyIngress.level7 MyIngress.CheckFeature 37 31 0 => 41 36 268
+table_add MyIngress.level8 MyIngress.SetClass 41 36 1 => 42 0
+table_add MyIngress.level8 MyIngress.SetClass 41 36 0 => 43 1
+table_add MyIngress.level6 MyIngress.CheckFeature 36 25 0 => 44 24 184
+table_add MyIngress.level7 MyIngress.CheckFeature 44 24 1 => 45 24 0
+table_add MyIngress.level8 MyIngress.SetClass 45 24 1 => 46 0
+table_add MyIngress.level8 MyIngress.SetClass 45 24 0 => 47 0
+table_add MyIngress.level7 MyIngress.CheckFeature 44 24 0 => 48 31 30038
+table_add MyIngress.level8 MyIngress.SetClass 48 31 1 => 49 1
+table_add MyIngress.level8 MyIngress.SetClass 48 31 0 => 50 0
+table_add MyIngress.level5 MyIngress.CheckFeature 35 28 0 => 51 28 93200
+table_add MyIngress.level6 MyIngress.CheckFeature 51 28 1 => 52 15 936
+table_add MyIngress.level7 MyIngress.CheckFeature 52 15 1 => 53 24 6711
+table_add MyIngress.level8 MyIngress.SetClass 53 24 1 => 54 1
+table_add MyIngress.level8 MyIngress.SetClass 53 24 0 => 55 0
+table_add MyIngress.level7 MyIngress.SetClass 52 15 0 => 56 0
+table_add MyIngress.level6 MyIngress.CheckFeature 51 28 0 => 57 31 2084
+table_add MyIngress.level7 MyIngress.SetClass 57 31 1 => 58 1
+table_add MyIngress.level7 MyIngress.CheckFeature 57 31 0 => 59 28 119677
+table_add MyIngress.level8 MyIngress.SetClass 59 28 1 => 60 0
+table_add MyIngress.level8 MyIngress.SetClass 59 28 0 => 61 0
+table_add MyIngress.level4 MyIngress.SetClass 34 18 0 => 62 0
+table_add MyIngress.level2 MyIngress.CheckFeature 1 31 0 => 63 36 792985
+table_add MyIngress.level3 MyIngress.CheckFeature 63 36 1 => 64 33 110
+table_add MyIngress.level4 MyIngress.CheckFeature 64 33 1 => 65 33 16
+table_add MyIngress.level5 MyIngress.CheckFeature 65 33 1 => 66 31 174106
+table_add MyIngress.level6 MyIngress.CheckFeature 66 31 1 => 67 8 0
+table_add MyIngress.level7 MyIngress.CheckFeature 67 8 1 => 68 28 116229
+table_add MyIngress.level8 MyIngress.SetClass 68 28 1 => 69 1
+table_add MyIngress.level8 MyIngress.SetClass 68 28 0 => 70 0
+table_add MyIngress.level7 MyIngress.SetClass 67 8 0 => 71 0
+table_add MyIngress.level6 MyIngress.CheckFeature 66 31 0 => 72 28 3451547
+table_add MyIngress.level7 MyIngress.CheckFeature 72 28 1 => 73 41 28450000
+table_add MyIngress.level8 MyIngress.SetClass 73 41 1 => 74 0
+table_add MyIngress.level8 MyIngress.SetClass 73 41 0 => 75 0
+table_add MyIngress.level7 MyIngress.CheckFeature 72 28 0 => 76 33 15
+table_add MyIngress.level8 MyIngress.SetClass 76 33 1 => 77 0
+table_add MyIngress.level8 MyIngress.SetClass 76 33 0 => 78 1
+table_add MyIngress.level5 MyIngress.CheckFeature 65 33 0 => 79 8 4
+table_add MyIngress.level6 MyIngress.CheckFeature 79 8 1 => 80 15 897
+table_add MyIngress.level7 MyIngress.CheckFeature 80 15 1 => 81 28 28432
+table_add MyIngress.level8 MyIngress.SetClass 81 28 1 => 82 1
+table_add MyIngress.level8 MyIngress.SetClass 81 28 0 => 83 0
+table_add MyIngress.level7 MyIngress.CheckFeature 80 15 0 => 84 15 1157
+table_add MyIngress.level8 MyIngress.SetClass 84 15 1 => 85 1
+table_add MyIngress.level8 MyIngress.SetClass 84 15 0 => 86 0
+table_add MyIngress.level6 MyIngress.CheckFeature 79 8 0 => 87 36 728453
+table_add MyIngress.level7 MyIngress.CheckFeature 87 36 1 => 88 4 0
+table_add MyIngress.level8 MyIngress.SetClass 88 4 1 => 89 0
+table_add MyIngress.level8 MyIngress.SetClass 88 4 0 => 90 0
+table_add MyIngress.level7 MyIngress.CheckFeature 87 36 0 => 91 8 6
+table_add MyIngress.level8 MyIngress.SetClass 91 8 1 => 92 1
+table_add MyIngress.level8 MyIngress.SetClass 91 8 0 => 93 0
+table_add MyIngress.level4 MyIngress.CheckFeature 64 33 0 => 94 15 2
+table_add MyIngress.level5 MyIngress.CheckFeature 94 15 1 => 95 28 206790
+table_add MyIngress.level6 MyIngress.CheckFeature 95 28 1 => 96 28 164066
+table_add MyIngress.level7 MyIngress.SetClass 96 28 1 => 97 0
+table_add MyIngress.level7 MyIngress.SetClass 96 28 0 => 98 1
+table_add MyIngress.level6 MyIngress.CheckFeature 95 28 0 => 99 28 209151
+table_add MyIngress.level7 MyIngress.CheckFeature 99 28 1 => 100 8 2
+table_add MyIngress.level8 MyIngress.SetClass 100 8 1 => 101 1
+table_add MyIngress.level8 MyIngress.SetClass 100 8 0 => 102 0
+table_add MyIngress.level7 MyIngress.SetClass 99 28 0 => 103 0
+table_add MyIngress.level5 MyIngress.CheckFeature 94 15 0 => 104 41 60050000
+table_add MyIngress.level6 MyIngress.CheckFeature 104 41 1 => 105 28 36860
+table_add MyIngress.level7 MyIngress.CheckFeature 105 28 1 => 106 25 2
+table_add MyIngress.level8 MyIngress.SetClass 106 25 1 => 107 1
+table_add MyIngress.level8 MyIngress.SetClass 106 25 0 => 108 0
+table_add MyIngress.level7 MyIngress.CheckFeature 105 28 0 => 109 15 923
+table_add MyIngress.level8 MyIngress.SetClass 109 15 1 => 110 0
+table_add MyIngress.level8 MyIngress.SetClass 109 15 0 => 111 0
+table_add MyIngress.level6 MyIngress.CheckFeature 104 41 0 => 112 28 7330770
+table_add MyIngress.level7 MyIngress.SetClass 112 28 1 => 113 1
+table_add MyIngress.level7 MyIngress.SetClass 112 28 0 => 114 1
+table_add MyIngress.level3 MyIngress.CheckFeature 63 36 0 => 115 8 5
+table_add MyIngress.level4 MyIngress.CheckFeature 115 8 1 => 116 15 933
+table_add MyIngress.level5 MyIngress.SetClass 116 15 1 => 117 0
+table_add MyIngress.level5 MyIngress.CheckFeature 116 15 0 => 118 15 936
+table_add MyIngress.level6 MyIngress.SetClass 118 15 1 => 119 1
+table_add MyIngress.level6 MyIngress.CheckFeature 118 15 0 => 120 36 1009124
+table_add MyIngress.level7 MyIngress.SetClass 120 36 1 => 121 0
+table_add MyIngress.level7 MyIngress.SetClass 120 36 0 => 122 0
+table_add MyIngress.level4 MyIngress.SetClass 115 8 0 => 123 0
+
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.1.1/32 => 08:00:00:00:01:11 6
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.2.2/32 => 08:00:00:00:02:22 4
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.3.3/32 => 08:00:00:00:03:33 1
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.4.4/32 => 08:00:00:00:04:44 2
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.5.5/32 => 08:00:00:00:05:55 7
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.6.6/32 => 08:00:00:00:06:66 8
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.7.7/32 => 08:00:00:00:07:77 6
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.12.12/32 => 08:00:00:00:12:12 4
+table_add MyIngress.ipv4_lpm MyIngress.ipv4_forward 10.0.16.16/32 => 08:00:00:00:16:16 8
